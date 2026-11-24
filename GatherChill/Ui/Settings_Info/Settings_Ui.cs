@@ -126,6 +126,8 @@ public static partial class SettingsUi
         Overlay_AutoShow,
         Overlay_AutoClose,
         SafetyGatherDelay,
+        RandomMountDelay,
+        RandomNodeDelay,
 
         // Character Specific
         Wait_ReturnPoint,

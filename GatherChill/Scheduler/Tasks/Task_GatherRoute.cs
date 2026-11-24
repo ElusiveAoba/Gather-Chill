@@ -572,6 +572,9 @@ namespace GatherChill.Scheduler.Tasks
                 return false;
             }
 
+            if (C.RandomDelay_Node && !RandomDelay.Passed("Node interact", C.NodeDelay_Min, C.NodeDelay_Max))
+                return false;
+
             if (EzThrottler.Throttle("Target + Interaction throttle"))
             {
                 Utils.TargetgameObject(targetNode);

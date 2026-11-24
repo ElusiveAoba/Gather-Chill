@@ -17,4 +17,11 @@ public partial class Config
     // Safety Settings
     public bool SafetyDelay_Gather { get; set; } = false;
     public int Gather_DelayTimer { get; set; } = 250;
+    
+    public bool RandomDelay_Mount { get; set; } = false;
+    public int MountDelay_Min { get; set; } = 300;
+    public int MountDelay_Max { get; set; } = 1200;
+    public bool RandomDelay_Node { get; set; } = false;
+    public int NodeDelay_Min { get; set; } = 300;
+    public int NodeDelay_Max { get; set; } = 1500;
 }

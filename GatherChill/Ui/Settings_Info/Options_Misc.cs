@@ -97,4 +97,56 @@ public static partial class SettingsUi
             }
         }
     };
+
+    private static void DrawRandomDelay(string checkboxLabel, string id, bool enabled, Action<bool> setEnabled, int min, Action<int> setMin, int max, Action<int> setMax)
+    {
+        if (ImGui.Checkbox(checkboxLabel, ref enabled))
+        {
+            setEnabled(enabled);
+            C.Save();
+        }
+
+        if (!enabled)
+            return;
+
+        ImGui.SetNextItemWidth(150 * ImGuiHelpers.GlobalScale);
+        if (ImGui.SliderInt($"Min (ms)##{id}", ref min, 0, 5000))
+        {
+            setMin(min);
+            if (max < min)
+                setMax(min);
+            C.SaveDebounced();
+        }
+
+        ImGui.SetNextItemWidth(150 * ImGuiHelpers.GlobalScale);
+        if (ImGui.SliderInt($"Max (ms)##{id}", ref max, 0, 5000))
+        {
+            setMax(max);
+            if (min > max)
+                setMin(max);
+            C.SaveDebounced();
+        }
+    }
+
+    private static SettingEntry RandomMountDelay = new()
+    {
+        Label = "Random Delay Mount",
+        Category = MiscOption,
+        Keywords = new[] { "Safety", "Delay", "Random", "Mount", "Human" },
+        Draw = () => DrawRandomDelay("Random delay before mounting", "MountDelay",
+            C.RandomDelay_Mount, v => C.RandomDelay_Mount = v,
+            C.MountDelay_Min, v => C.MountDelay_Min = v,
+            C.MountDelay_Max, v => C.MountDelay_Max = v)
+    };
+
+    private static SettingEntry RandomNodeDelay = new()
+    {
+        Label = "Random Delay Node",
+        Category = MiscOption,
+        Keywords = new[] { "Safety", "Delay", "Random", "Node", "Interact", "Human" },
+        Draw = () => DrawRandomDelay("Random delay before opening a node", "NodeDelay",
+            C.RandomDelay_Node, v => C.RandomDelay_Node = v,
+            C.NodeDelay_Min, v => C.NodeDelay_Min = v,
+            C.NodeDelay_Max, v => C.NodeDelay_Max = v)
+    };
 }

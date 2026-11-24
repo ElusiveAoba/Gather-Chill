@@ -18,6 +18,9 @@ public static partial class Utils
 {
     public static unsafe void MountAction()
     {
+        if (C.RandomDelay_Mount && !RandomDelay.Passed("Mount", C.MountDelay_Min, C.MountDelay_Max))
+            return;
+
         bool useMount = C.MountId != 0 && PlayerState.Instance()->IsMountUnlocked(C.MountId);
 
         if (!Player.IsCasting && !Player.Mounting)
